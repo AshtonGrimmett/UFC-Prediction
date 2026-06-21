@@ -3,6 +3,7 @@ library(tidyverse)
 library(PlayerRatings)
 library(ggplot2)
 library(dplyr)
+
 #Basic data cleaning and formatting
 UFC_GOLD <- read.csv("ufc_gold_dataset_final.csv")
 UFC <- UFC_GOLD %>%
@@ -50,6 +51,7 @@ UFC <- UFC_GOLD %>%
     ),
     period = as.integer(format(date, "%Y%m"))
   )
+
 UFC <- UFC |>
   mutate(date = as.Date(date),
          red_wins = case_when(
@@ -57,10 +59,12 @@ UFC <- UFC |>
            winner == b_name ~ 0,
            TRUE ~ 0.5),
          period = as.integer(format(as.Date(date), "%Y%m")))
+
 train <- UFC |> 
   filter(date < as.Date("2026-01-01"))
 test  <- UFC |> 
   filter(date >= as.Date("2026-01-01"))
+
 #Glicko
 ufc_glicko <- train %>%
   filter(!is.na(red_wins)) %>%

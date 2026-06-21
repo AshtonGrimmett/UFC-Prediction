@@ -50,8 +50,9 @@ UFC <- UFC_GOLD %>%
     ),
     period = as.integer(format(date, "%Y%m"))
   )
+
+
 # Basic data cleaning and formatting
-'UFC <- read.csv("UFC.csv")'
 UFC <- UFC |>
   mutate(date = as.Date(date),
          red_wins = case_when(
